@@ -1,0 +1,32 @@
+# Dependencies
+node_modules
+npm-debug.log*
+.pnp
+.pnp.*
+
+# Build output
+.next
+out
+build
+
+# Git
+.git
+.gitignore
+
+# Env (inject at runtime)
+.env
+.env.*
+!.env.example
+
+# IDE and OS
+.DS_Store
+*.pem
+.idea
+.vscode
+
+# Misc
+README.md
+*.md
+.vercel
+coverage
+/app/generated
