@@ -1,11 +1,12 @@
 # Stage 1: Dependencies
-FROM node:20-alpine AS dependencies
+#FROM node:20-alpine AS dependencies
+FROM public.ecr.aws/docker/library/node:20-alpine AS dependencies
 WORKDIR /app
 COPY package.json package-lock.json* ./
 RUN npm ci
 
 # Stage 2: Build
-FROM node:20-alpine AS builder
+FROM public.ecr.aws/docker/library/node:20-alpine AS builder
 WORKDIR /app
 COPY --from=dependencies /app/node_modules ./node_modules
 COPY . .
@@ -15,7 +16,7 @@ ENV NODE_ENV=production
 RUN npm run build
 
 # Stage 3: Run
-FROM node:20-alpine AS runner
+FROM public.ecr.aws/docker/library/node:20-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
