@@ -20,14 +20,14 @@ phases:
       - echo Building the Docker image...
       - docker build -t gocart .
       - echo Tagging the Docker image...
-      - docker tag gocart:latest 478715309921.dkr.ecr.us-east-1.amazonaws.com/gocart-repo:latest
+      - docker tag gocart:latest 478715309921.dkr.ecr.us-east-1.amazonaws.com/gocart:latest
 
   post_build:
     commands:
       - echo Pushing the Docker image to Amazon ECR...
-      - docker push 478715309921.dkr.ecr.us-east-1.amazonaws.com/gocart-repo:latest
+      - docker push 478715309921.dkr.ecr.us-east-1.amazonaws.com/gocart:latest
       - echo Creating imagedefinitions.json file for ECS deployment...
-      - echo '[{"name":"gocart-test-container","imageUri":"478715309921.dkr.ecr.us-east-1.amazonaws.com/gocart-repo:latest"}]' > imagedefinitions.json
+      - echo '[{"name":"gocart-test-container","imageUri":"478715309921.dkr.ecr.us-east-1.amazonaws.com/gocart:latest"}]' > imagedefinitions.json
 artifacts:
   files:
     - imagedefinitions.json
