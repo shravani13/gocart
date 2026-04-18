@@ -19,7 +19,8 @@
     "react-dom": "^19.2.1",
     "react-hot-toast": "^2.5.2",
     "react-redux": "^9.2.0",
-    "recharts": "^3.1.2"
+    "recharts": "^3.1.2",
+    "mssql": "^11.0.1"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.26.0",

@@ -24,11 +24,52 @@ const OrderSummary = ({ totalPrice, items }) => {
         
     }
 
-    const handlePlaceOrder = async (e) => {
-        e.preventDefault();
+    // const handlePlaceOrder = async (e) => {
+    //     e.preventDefault();
 
+    //     router.push('/orders')
+    // }
+
+    const handlePlaceOrder = async (e) => {
+        e.preventDefault()
+      
+        if (!selectedAddress) {
+          throw new Error('Please select an address before placing order')
+        }
+      
+        if (!items?.length) {
+          throw new Error('Your cart is empty')
+        }
+      
+        const payload = {
+          paymentMethod,
+          total: coupon ? Number((totalPrice - (coupon.discount / 100 * totalPrice)).toFixed(2)) : totalPrice,
+          address: selectedAddress,
+          items: items.map((item) => ({
+            productId: item.id,
+            quantity: item.quantity,
+            price: item.price,
+            product: {
+              id: item.id,
+              name: item.name,
+              images: item.images,
+            },
+          })),
+        }
+      
+        const response = await fetch('/api/orders', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        })
+      
+        const data = await response.json()
+        if (!response.ok) {
+          throw new Error(data.error || 'Failed to place order')
+        }
+      
         router.push('/orders')
-    }
+      }
 
     return (
         <div className='w-full max-w-lg lg:max-w-[340px] bg-slate-50/30 border border-slate-200 text-slate-500 text-sm rounded-xl p-7'>

@@ -8,9 +8,28 @@ export default function Orders() {
 
     const [orders, setOrders] = useState([]);
 
+    // useEffect(() => {
+    //     setOrders(orderDummyData)
+    // }, []);
+
     useEffect(() => {
-        setOrders(orderDummyData)
-    }, []);
+        const fetchOrders = async () => {
+          try {
+            const response = await fetch('/api/orders', { cache: 'no-store' })
+            const data = await response.json()
+      
+            if (!response.ok) {
+              throw new Error(data.error || 'Failed to fetch orders')
+            }
+      
+            setOrders(data.orders || [])
+          } catch (error) {
+            setOrders(orderDummyData)
+          }
+        }
+      
+        fetchOrders()
+      }, [])
 
     return (
         <div className="min-h-[70vh] mx-6">
